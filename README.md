@@ -1,5 +1,5 @@
 # docker-nginx-reverse-proxy
-A reverse proxy implementation using Nginx to handle multiple docker containers running on 80 or 443 ports.
+A reverse proxy implementation using Nginx to handle multiple docker containers running on the same 443 port.
 
 ### Make sure to setup your local environemnt domains correclty in /etc/hosts on your machine.
 
