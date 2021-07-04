@@ -1,0 +1,72 @@
+version: '3.7'
+
+services:
+  # PHP-FPM - Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: php74site_app
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+
+    volumes:
+      - ./:/var/www
+      - ./docker-files/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+
+  # Redis
+  redis:
+    image: redis:alpine
+    container_name: php74site_redis
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 6382:6382
+    command: --port 6382
+
+  # NGINX - Service
+  webserver:
+    image: nginx:alpine
+    container_name: php74site_webserver
+    restart: unless-stopped
+    tty: true
+
+    expose:
+      - "80"
+
+    volumes:
+      - ./:/var/www
+      - ./docker-files/nginx/conf.d/:/etc/nginx/conf.d/
+
+    depends_on:
+      - app
+
+  # MariaDB - Service
+  db:
+    image: mariadb:latest
+    container_name: php74site_db
+    restart: unless-stopped
+    tty: true
+
+    ports:
+      - "5436:5436"
+
+    environment:
+      - MYSQL_ROOT_PASSWORD=yourpassword
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=php74site_db
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=yourpassword
+
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./docker-files/mysql/:/etc/mysql/
+
+    command: --port 5436
+
+# Volumes
+volumes:
+  dbdata:
+    driver: local
