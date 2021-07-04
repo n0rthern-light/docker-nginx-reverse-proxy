@@ -1,0 +1,18 @@
+version: '3'
+services:
+  proxy:
+    build: ./
+    networks:
+      - php74site
+      - php80site
+    ports:
+      - 80:80
+      - 443:443
+
+networks:
+  php74site:
+    external:
+      name: php74site_default
+  php80site:
+    external:
+      name: php80site_default
