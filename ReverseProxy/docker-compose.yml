@@ -2,6 +2,7 @@ version: '3'
 services:
   proxy:
     build: ./
+    restart: unless-stopped
     networks:
       - php74site
       - php80site

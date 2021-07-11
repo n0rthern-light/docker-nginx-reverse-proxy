@@ -60,10 +60,6 @@ services:
       - MYSQL_USER=root
       - MYSQL_PASSWORD=yourpassword
 
-    volumes:
-      - dbdata:/var/lib/mysql
-      - ./docker-files/mysql/:/etc/mysql/
-
     command: --port 5436
 
 # Volumes
