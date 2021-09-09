@@ -43,3 +43,7 @@ openssl x509 -req -in $NAME.csr -CA myCA.pem -CAkey myCA.key -CAcreateserial \
 -out $NAME.crt -days 825 -sha256 -extfile $NAME.ext
 
 ```
+- Become a CA
+- Sign your certificate using your CA cert+key
+- Import myCA.pem as an "Authority" (not into "Your Certificates") in your Chrome settings (Settings > Manage certificates > Authorities > Import)
+- Use the $NAME.crt and $NAME.key files in your server
